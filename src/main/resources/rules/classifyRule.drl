@@ -1,0 +1,19 @@
+package us.singhlovepreet.rules;
+
+import us.singhlovepreet.domain.model.Item
+import us.singhlovepreet.domain.enumvalue.ItemCategory;
+
+rule "classify Item Category as LOW_RANGE"
+
+when
+    $item : Item(cost<200)
+    then $item.setCategory(ItemCategory.LOW_RANGE);
+end
+
+
+rule "classify Item Category as HIGH_RANGE"
+
+when
+    $item : Item(cost>600)
+    then $item.setCategory(ItemCategory.HIGH_RANGE);
+end

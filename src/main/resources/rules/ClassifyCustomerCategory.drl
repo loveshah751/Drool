@@ -1,0 +1,21 @@
+package us.singhlovepreet.rules;
+
+import us.singhlovepreet.domain.model.Order;
+import us.singhlovepreet.domain.model.Customer;
+import us.singhlovepreet.domain.enumvalue.CustomerCategory;
+
+/**
+Business Rule :
+If customer purchase the order quantities is greater then 5, change the category of customer from N/A to Silver
+**/
+rule "Classify Customer Category by Order Size"
+
+    when
+        $customer: Customer(category == CustomerCategory.NA)
+        and
+        $order: Order(orderQuantities.size >= 5, customer == $customer)
+    then
+        modify($customer){
+        setCategory(CustomerCategory.SILVER)
+        };
+     end

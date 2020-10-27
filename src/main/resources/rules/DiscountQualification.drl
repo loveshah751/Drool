@@ -1,0 +1,31 @@
+package us.singhlovepreet.rules;
+
+import us.singhlovepreet.domain.model.Order;
+import us.singhlovepreet.domain.model.OrderQuantity;
+import us.singhlovepreet.domain.model.Discount;
+import us.singhlovepreet.domain.model.Item;
+import us.singhlovepreet.domain.enumvalue.ItemCategory;
+
+/**
+Business rule:
+if the customer order has orderQuantity greater than 2 and  no discount applied then for all this orderQuantities
+which have itemCategory of HiGH_RANGE will be given 10% discount
+**/
+
+rule "Discount of 10% for High_RANGE Items"
+
+when
+        /**
+        Explaination:
+         First step for this business rule is get all the orders which have orderQuanities greater then or
+        equal to 2 and have discount Object as null.
+        Second Step forall is operation provided by drool ruleEngine to iterate over the java objects.
+            **/
+    $order: Order($orderQuantity: orderQuantities.size >= 2, discount == null)
+    forall(OrderQuantity( this memberOf $orderQuantity, $itemPurchase : itemPurchased)
+            Item(this == $itemPurchase, category == ItemCategory.HIGH_RANGE))
+  then
+    modify($order){
+    setDiscount(new Discount(10.0))
+    };
+   end

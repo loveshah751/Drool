@@ -1,0 +1,23 @@
+package us.singhlovepreet.rules;
+import us.singhlovepreet.domain.enumvalue.CustomerCategory;
+import us.singhlovepreet.domain.enumvalue.PromoCodeType;
+import us.singhlovepreet.domain.model.Customer;
+import us.singhlovepreet.domain.model.Order;
+import us.singhlovepreet.domain.model.PromoCode;
+import java.time.LocalDate;
+
+/**
+Business rule :
+If the customer  falls under the silver category, generate the promoCode of Pionts for that Custoner
+**/
+
+rule "generating the PromoCode for Customer Category of Silver"
+
+when
+    $customer: Customer(category == CustomerCategory.SILVER)
+    $order : Order(customer == $customer)
+    then
+    LocalDate startDate = LocalDate.now();
+    LocalDate endDate = startDate.plusDays(1);
+     insert(new PromoCode($customer,$order,PromoCodeType.POINTS,startDate,endDate));
+     end
