@@ -1,6 +1,6 @@
-#Drool Rule Language Syntax
+<h1>Drool Rule Language Syntax</h1>
 
-####This Branch will cover everything you should know while writing the rule in DRL.
+<h4>This Branch will cover everything you should know while writing the rule in DRL.</h4>
 
 <p> What is DRL and what is usage of it in the rule Engine ?</p>
 
