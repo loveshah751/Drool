@@ -1,0 +1,2 @@
+#Global Variable in Drools
+

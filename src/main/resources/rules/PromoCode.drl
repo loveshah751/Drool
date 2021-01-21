@@ -17,7 +17,8 @@ when
     $customer: Customer(category == CustomerCategory.SILVER)
     $order : Order(customer == $customer)
     then
-    LocalDate startDate = LocalDate.now();
+    LocalDate startDate = LocalDate.now().minusDays(1);
     LocalDate endDate = startDate.plusDays(1);
-     insert(new PromoCode($customer,$order,PromoCodeType.POINTS,startDate,endDate));
+     insert(new PromoCode($customer,$order,PromoCodeType.POINTS,startDate,startDate));
+     insert(new PromoCode($customer,$order,PromoCodeType.DISCOUNT,startDate,endDate));
      end

@@ -21,4 +21,9 @@ public class PromoCode {
     private LocalDate promoStartDate;
 
     private LocalDate promoExpirationDate;
+
+    public boolean isPromoExpire() {
+        var expirationDate = this.getPromoExpirationDate();
+        return expirationDate.isBefore(LocalDate.now());
+    }
 }

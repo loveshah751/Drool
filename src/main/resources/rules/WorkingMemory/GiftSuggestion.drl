@@ -1,0 +1,14 @@
+package rules.WorkingMemory;
+import us.singhlovepreet.domain.model.Customer;
+import us.singhlovepreet.domain.model.GoldCustomer;
+import us.singhlovepreet.domain.enumvalue.CustomerCategory;
+import us.singhlovepreet.domain.model.Item;
+import us.singhlovepreet.domain.model.LowRangeItem;
+
+rule "GiftSuggestion"
+    when
+        GoldCustomer($c : Customer)
+        LowRangeItem($i : Item)
+    then
+    System.out.println("Thanks "+$c.getName() + " for being a loyal Customer. We are offering you "+$i.getName() +" as a gift");
+end
