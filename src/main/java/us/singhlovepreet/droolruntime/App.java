@@ -9,6 +9,7 @@ import us.singhlovepreet.domain.model.Customer;
 import us.singhlovepreet.domain.model.Item;
 import us.singhlovepreet.domain.model.Order;
 import us.singhlovepreet.domain.model.OrderQuantity;
+import us.singhlovepreet.domain.service.EmailNotificationService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +24,7 @@ public class App {
         var kieServices = KieServices.Factory.get();
         var kieContainer = kieServices.getKieClasspathContainer();
         var kieSession = kieContainer.newKieSession();
+        kieSession.setGlobal("emailNotificationService", new EmailNotificationService());
         workingMemoryRuleExecution(kieSession);
     }
 
@@ -57,4 +59,6 @@ public class App {
 
         log.info("Customer1 Category After Rule Engine Processing " + customer1.getCategory());
     }
+
+
 }

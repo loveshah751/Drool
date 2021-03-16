@@ -1,0 +1,46 @@
+package rules.RuleAttribute;
+import us.singhlovepreet.domain.model.Item
+import us.singhlovepreet.domain.enumvalue.ItemCategory
+
+/**
+In this file we have three rules, lets initially while designing the business rules, we have
+rule to classify item based on the price range. But Later we decide, that classification should
+be based on the item category as well.
+
+So In order to delete the first rule, we can inactive the rule by simply adding the rule attribute.
+
+Now, lets say later in the future we have requirement where need to classify the item whose
+price is between 300 to 400 irrespective of the item category as Special mid High range.
+
+Please refer to docs/ruleAttribute.md file for the details about this file.
+**/
+
+rule "ClassifyItem"
+enabled false
+    when
+      $i : Item(cost > 200 && cost < 500)
+    then
+        $i.setCategory(ItemCategory.MID_RANGE);
+        update($i)
+end
+
+
+
+rule "ClassifyItem with No Category"
+    when
+      $i : Item(cost > 200 && cost < 500, category == ItemCategory.NA)
+    then
+        $i.setCategory(ItemCategory.MID_RANGE);
+        update($i)
+end
+
+
+rule "ClassifyItem irrespective of the Category"
+salience 2
+no-loop
+    when
+      $i : Item(cost > 300 && cost < 400)
+    then
+        $i.setCategory(ItemCategory.SPECIAL_MID_HIGH_RANGE);
+        update($i)
+end
