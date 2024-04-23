@@ -1,0 +1,24 @@
+package rules.WorkingMemory.DeleteKeywordRules;
+
+import java.time.LocalDate;
+import java.util.Date;
+import us.singhlovepreet.domain.model.PromoCode;
+import us.singhlovepreet.domain.model.Order;
+
+
+rule "PromoCodeValidation"
+    when
+        $inValidpromoCode : PromoCode(isPromoExpire())
+    then
+        delete($inValidpromoCode);
+end
+
+
+rule "Execute PromoCode"
+
+    when
+     $O : Order()
+     $promoCode : PromoCode(customerOrder == $O)
+   then
+       System.out.println(" we have promo code of type "+$promoCode.getPromoType() +" which is valid from "+$promoCode.getPromoStartDate()+" to "+$promoCode.getPromoExpirationDate());
+      end

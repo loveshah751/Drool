@@ -1,0 +1,28 @@
+package rules.WorkingMemory;
+import us.singhlovepreet.domain.model.Customer;
+import us.singhlovepreet.domain.model.GoldCustomer;
+import us.singhlovepreet.domain.enumvalue.CustomerCategory;
+import us.singhlovepreet.domain.model.Item;
+import us.singhlovepreet.domain.model.LowRangeItem;
+
+/**
+Business Rule is if there is customer who is Gold category and
+is there any item we have less then 10 bucks, if Both condition is true
+then we should suggest that item as gift to customer.
+**/
+rule "CustomerClassification"
+    when
+       $c : Customer(category == CustomerCategory.GOLD)
+    then
+        insert(new GoldCustomer($c));
+end
+
+
+rule "Item Classification - LOW Price"
+
+    when
+       $i : Item(cost < 10)
+    then
+        insert(new LowRangeItem($i));
+end
+

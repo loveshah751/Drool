@@ -1,0 +1,38 @@
+package rules.WorkingMemory.ModifyKeywordRules;
+import us.singhlovepreet.domain.model.Customer;
+import us.singhlovepreet.domain.model.Order;
+import us.singhlovepreet.domain.enumvalue.CustomerCategory;
+
+/**
+This DRL rule justify the Modification feature of Working Memory.
+
+NOTE: We can say there is a duplication of one condition between these two rules.
+There is way to avoid this duplication, refer to inhertianceRule section for the solution.
+**/
+rule "Classify Customer With No Category to Gold"
+    when
+        $c : Customer(category == CustomerCategory.NA)
+        $o :Order(getOrderQuantity() > 10)
+    then
+    modify($c){setCategory(CustomerCategory.GOLD)}
+end
+
+
+rule "Classify Customer With No Category to Bronze"
+    when
+        $c : Customer(category == CustomerCategory.NA)
+        $o :Order(getOrderQuantity() > 1, getOrderQuantity() < 2)
+    then
+    $c.setCategory(CustomerCategory.BRONZE);
+    update($c);
+end
+
+
+rule "Classify Customer With No Category to Silver"
+    when
+        $c : Customer(category == CustomerCategory.NA)
+        $o :Order(getOrderQuantity() >= 2, getOrderQuantity() <= 10)
+    then
+    $c.setCategory(CustomerCategory.SILVER);
+    update($c);
+end

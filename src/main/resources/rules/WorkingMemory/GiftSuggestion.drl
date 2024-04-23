@@ -1,0 +1,19 @@
+package rules.WorkingMemory;
+import us.singhlovepreet.domain.model.Customer;
+import us.singhlovepreet.domain.model.GoldCustomer;
+import us.singhlovepreet.domain.enumvalue.CustomerCategory;
+import us.singhlovepreet.domain.model.Item;
+import us.singhlovepreet.domain.service.EmailNotificationService;
+import us.singhlovepreet.domain.model.LowRangeItem;
+
+global EmailNotificationService emailNotificationService;
+
+rule "GiftSuggestion"
+    when
+        GoldCustomer($c : Customer)
+        LowRangeItem($i : Item)
+    then
+    String message = "Thanks "+$c.getName() + " for being a loyal Customer. We are offering you "+$i.getName() +" as a gift";
+    emailNotificationService.sendEmail($c.getEmail(), message);
+    System.out.println("Rule Gift Suggestion processing finished");
+end
